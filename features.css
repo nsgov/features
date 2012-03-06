@@ -342,16 +342,16 @@
 
 .featuresTransitionWrap .featurePhoto,
 .featuresTransitionReverseWrap .featurePhoto {
-	   -moz-transform-origin: 50% 0 -700px;
-	    -ms-transform-origin: 50% 0 -700px;
+	   -moz-transform-origin: 50% 0 -800px;
+	    -ms-transform-origin: 50% 0 -800px;
 }
 .featureWrapOut .featurePhoto,
 .featureReverseWrapIn .featurePhoto {
 	opacity: 0;
 	-webkit-transform: scale3d(-0.5, 0.1, 1) translate3d(-150%, 25%, 0);
 	   -moz-transform: scale(-0.5, 0.1) translate(-150%, 25%);
-	   -moz-transform: rotateY(-150deg) translateZ(-500px);
-	    -ms-transform: rotateY(-150deg) translateZ(-500px);
+	   -moz-transform: rotateY(-150deg) translateZ(-800px);
+	    -ms-transform: rotateY(-150deg) translateZ(-800px);
 	     -o-transform: scale(-0.5, 0.1) skew(0) translate(-150%, 25%);
 	        transform: scale(-0.5, 0.1) translate(-150%, 25%);
 }
@@ -360,8 +360,8 @@
 	opacity: 0;
 	-webkit-transform: scale3d(-0.5, 0.1, 1) translate3d(150%, -25%, 0);
 	   -moz-transform: scale(-0.5, 0.1) translate(150%, -25%);
-	   -moz-transform: rotateY(150deg) translateZ(-500px);
-	    -ms-transform: rotateY(150deg) translateZ(-500px);
+	   -moz-transform: rotateY(150deg) translateZ(-800px);
+	    -ms-transform: rotateY(150deg) translateZ(-800px);
 	     -o-transform: scale(-0.5, 0.1) skew(0) translate(150%, -25%);
 	        transform: scale(-0.5, 0.1) translate(150%, -25%);
 }
