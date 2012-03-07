@@ -51,9 +51,9 @@ Features.Box.prototype = {
 			a.appendChild(document.createTextNode(b.txt + " Feature"));
 			element.appendChild(a).href = jslink + b.id + '();';
 		}
-		var dotchar = "•";
+		var dotchar = "•"; dotchar.length==1 || (dotchar = '*');
 		for (var i=this.length, a, n; (n = i--) && (a=this.feature[i].dot);) {
-			a.appendChild(document.createTextNode(dotchar.length==1?dotchar:'('+n+')'));
+			a.appendChild(document.createTextNode(dotchar));
 			a.setAttribute("aria-label", "Feature " + n);
 			a.setAttribute("title", Features.byClass.get(this.feature[i].element, 'featureTitle')[0].getAttribute("title"));
 			a.href = jslink + 'Jump('+n+')';
