@@ -1,5 +1,5 @@
 /** features.js		*	@author David Nordlund		*	© 2012 Province of Nova Scotia	**/
-Features = {
+var Features = {
 	init: function() {	/// Find Feature boxes in a page and set up transitions.
 		Features.transitioner = Features.Transitioners.init();
 		var boxes = Features.byClass.init().get(document.body, 'features');
@@ -27,7 +27,7 @@ Features.Box.prototype = {
 	init: function(element, boxId) {
 		var list = Features.byClass.get(element, 'feature');
 		this.length = list.length;
-		if (this.length < 2)	// only setup bells & whistles if the box has multiple features
+		if (this.length < 2)	// only setup bells & whistles if box has multiple features
 			return;
 		this.container = element;
 		var jslink = 'javascript:Features.box['+boxId+'].';
@@ -55,7 +55,7 @@ Features.Box.prototype = {
 		for (var i=this.length, a, n; (n = i--) && (a=this.feature[i].dot);) {
 			a.appendChild(document.createTextNode(dotchar));
 			a.setAttribute("aria-label", "Feature " + n);
-			a.setAttribute("title", Features.byClass.get(this.feature[i].element, 'featureTitle')[0].getAttribute("title"));
+			a.setAttribute("title", Features.byClass.get(this.feature[i].element,'featureTitle')[0].getAttribute("title"));
 			a.href = jslink + 'Jump('+n+')';
 		}
 		element.appendChild(dots).className = 'featuresIndex';
