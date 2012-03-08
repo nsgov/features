@@ -135,6 +135,7 @@
 }
 .featureContent > .featureLinks { height: auto; }
 .featureLinks:hover {
+	background: #123;
 	background: rgba(0,0,0,0.5);
 	max-height: 80px;
 }
