@@ -236,11 +236,11 @@
 	-webkit-transform: translate3d(0,0,0);
 }
 .featuresTransitionAuto .featurePhoto, .featuresTransitionAutoWrap .featurePhoto {
-	-webkit-transition: all 1s ease-in-out;
-	   -moz-transition: all 1s ease-in-out;
-	    -ms-transition: all 1s ease-in-out;
-	     -o-transition: all 1s ease-in-out;
-	        transition: all 1s ease-in-out;
+	-webkit-transition-timing-function: ease-in-out;
+	   -moz-transition-timing-function: ease-in-out;
+	    -ms-transition-timing-function: ease-in-out;
+	     -o-transition-timing-function: ease-in-out;
+	        transition-timing-function: ease-in-out;
 }
 
 .featureTransitionOut .featureOverlay { display: none; }
