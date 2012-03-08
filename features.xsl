@@ -28,7 +28,7 @@
 	<xsl:variable name="pubdate" select="f:published/@date"/>
 	<article class="feature">
 		<xsl:if test="$duration"><xsl:attribute name="data-duration"><xsl:value-of select="$duration"/></xsl:attribute></xsl:if>
-		<a class="featurePhoto" href="{$defaulthref}"><img src="{$PHOTOPATH}{@id}.jpg" alt="{photo/@alt}" title="{photo/@cutline}" /></a>
+		<a class="featurePhoto" href="{$defaulthref}"><img src="{$PHOTOPATH}{@id}.jpg" alt="{f:photo/@alt}" title="{f:photo/@cutline}" /></a>
 		<div class="featureOverlay">
 			<div class="featureContent">
 				<h1 class="featureTitle" title="{f:title} ({$pubdate})"><a href="{$defaulthref}"><xsl:value-of select="f:title"/></a></h1>
