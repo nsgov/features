@@ -12,7 +12,7 @@
 </xsl:choose></xsl:param>
 
 <xsl:template match="f:features">
-	<div class="features" aria-live="polite" aria-atomic="false">
+	<div class="features">
 		<xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
 		<xsl:if test="@defaultduration"><xsl:attribute name="data-duration"><xsl:value-of select="@defaultduration"/></xsl:attribute></xsl:if>
 		<xsl:for-each select="f:feature"

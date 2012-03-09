@@ -20,7 +20,7 @@
 	height: 100%;
 	position: relative;
 	width: 100%;
-	z-index: 1;
+	z-index: 2;
 }
 .jsFeatures .feature {
 	display: block;
@@ -30,7 +30,7 @@
 	        perspective: 1000px;
 }
 
-.jsFeatures .hiddenFeature {display: none;}
+.jsFeatures .hiddenFeature { z-index: 0; }
 
 .features a { border: 0; cursor: pointer; }
 
@@ -54,7 +54,6 @@
 	margin: 0;
 	padding: 24px 8px 0;
 	overflow: hidden;
-	bottom: 0;
 	white-space: normal;
 }
 
@@ -134,9 +133,10 @@
 	        transition: all 1s ease 0.5s;
 }
 .featureContent > .featureLinks { height: auto; }
-.featureLinks:hover {
+.featureLinks:hover, .featureLinksFocused {
 	background: #123;
 	background: rgba(0,0,0,0.5);
+	height: auto;
 	max-height: 80px;
 }
 .featureLinkItem {
@@ -180,8 +180,10 @@
 	z-index: 6;
 }
 
-.featuresIndex a {
+.featuresIndex a, .featuresIndex a:link, .featuresIndex a:hover .featuresIndex a:active, .featuresIndex a:visited {
 	color: #0cf;
+}
+.featuresIndex a {
 	display: inline;
 	padding: 0 8px;
 /*	-webkit-transition: color 1s; */
@@ -196,7 +198,7 @@
 	text-shadow: 0px 0px 4px #fff;
 }
 
-.featuresIndex .featureIndex {
+.featuresIndex .featureIndex:link, .featuresIndex .featureIndex:hover, .featuresIndex .featureIndex:active, .featuresIndex .featureIndex:visited {
 	color: white;
 }
 
@@ -210,6 +212,7 @@
 	opacity: 1;
 	position: absolute;
 }
+.hiddenFeature .featurePhoto { top: -1px; height: 1px; overflow: hidden; z-index: 0; }
 
 .featuresTransitionNext .feature,
 .featuresTransitionBack .feature,
@@ -217,7 +220,7 @@
 	-webkit-perspective: 1000px;
 }
 
-.featureTransitionOut { z-index: 0; }
+.featureTransitionOut { z-index: 1; }
 
 .featuresTransition .featurePhoto {
 	-webkit-transition: all 1s;
@@ -235,7 +238,7 @@
 .featuresTransitionJump .featurePhoto {
 	-webkit-transform: translate3d(0,0,0);
 }
-.featuresTransitionAuto .featurePhoto, .featuresTransitionAutoWrap .featurePhoto {
+.featuresTransitionAuto .featurePhoto, .featuresTransitionCycle .featurePhoto {
 	-webkit-transition-timing-function: ease-in-out;
 	   -moz-transition-timing-function: ease-in-out;
 	    -ms-transition-timing-function: ease-in-out;
@@ -243,11 +246,17 @@
 	        transition-timing-function: ease-in-out;
 }
 
-.featureTransitionOut .featureOverlay { display: none; }
+.featureTransitionOut .featureOverlay, .hiddenFeature .featureOverlay {
+	background: red;
+	height: 1px;
+	margin-top: -1px;
+	overflow:hidden;
+	z-index: 0;
+}
 
-.featureAutoIn  .featurePhoto, .featureAutoWrapIn .featurePhoto { left: 100%; }
+.featureAutoIn  .featurePhoto, .featureCycleIn .featurePhoto { left: 100%; }
 .featureAutoOut .featurePhoto { left: -80%; }
-.featureAutoWrapOut .featurePhoto { left: -100%; }
+.featureCycleOut .featurePhoto { left: -100%; }
 
 .featureNextIn .featurePhoto,
 .featureBackOut .featurePhoto {
@@ -292,13 +301,13 @@
 	        transform: rotateX(90deg);
 }
 
-.featureAutoWrapOut .featurePhoto {
+.featureCycleOut .featurePhoto {
 	   -moz-transform: rotate(-90deg);
 	    -ms-transform: rotate(-90deg);
 	     -o-transform: rotate(-90deg);
 	        transform: rotate(-90deg) translate(-80%,80%);
 }
-.featureAutoWrapIn .featurePhoto {
+.featureCycleIn .featurePhoto {
 	   -moz-transform: rotate(90deg);
 	    -ms-transform: rotate(90deg);
 	     -o-transform: rotate(90deg);
@@ -306,12 +315,12 @@
 }
 
 .featuresTransitionWrap .featurePhoto,
-.featuresTransitionReverseWrap .featurePhoto {
+.featuresTransitionWrapBack .featurePhoto {
 	   -moz-transform-origin: 50% 0 -800px;
 	    -ms-transform-origin: 50% 0 -800px;
 }
 .featureWrapOut .featurePhoto,
-.featureReverseWrapIn .featurePhoto {
+.featureWrapBackIn .featurePhoto {
 	opacity: 0;
 	-webkit-transform: scale3d(-0.5, 0.1, 1) translate3d(-150%, 25%, 0);
 	   -moz-transform: scale(-0.5, 0.1) translate(-150%, 25%);
@@ -321,7 +330,7 @@
 	        transform: scale(-0.5, 0.1) translate(-150%, 25%);
 }
 .featureWrapIn .featurePhoto,
-.featureReverseWrapOut .featurePhoto {
+.featureWrapBackOut .featurePhoto {
 	opacity: 0;
 	-webkit-transform: scale3d(-0.5, 0.1, 1) translate3d(150%, -25%, 0);
 	   -moz-transform: scale(-0.5, 0.1) translate(150%, -25%);

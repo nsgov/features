@@ -1,6 +1,6 @@
 /** features.js		*	@author David Nordlund		*	© 2012 Province of Nova Scotia	**/
 var Features = {
-	init: function() {	/// Find Feature boxes in a page and set up transitions.
+	init: function() {	// Find Feature boxes & set up transitions.
 		Features.transitioner = Features.Transitioners.init();
 		var boxes = Features.byClass.init().get(document.body, 'features');
 		Features.box = new Array(boxes.length);
@@ -17,94 +17,96 @@ var Features = {
 			return found;
 		}
 	},
-	Box: function(element, i) { this.init(element, i); }	/** @constructor */
+	Box: function(tag, i) { this.init(tag, i); }
 }
 
-/** @class Features.Box */
 Features.Box.prototype = {
-	idx: 0,	// index of current feature within box
+	idx: 0,	// index of current feature
 	timer: 0,
-	init: function(element, boxId) {
-		var list = Features.byClass.get(element, 'feature');
+	busy: false,
+	init: function(tag, boxId) {
+		var list = Features.byClass.get(tag, 'feature');
 		this.length = list.length;
 		if (this.length < 2)	// only setup bells & whistles if box has multiple features
 			return;
-		this.container = element;
+		this.tag = tag;
 		var jslink = 'javascript:Features.box['+boxId+'].';
-		var defaultduration = element.getAttribute('defaultduration') || 9;
+		var defaultduration = tag.getAttribute('defaultduration') || 9;
 		var dots = document.createElement('ol');
+		dots.setAttribute("aria-hidden", "true");
+		this.createCallbacks(this);
 		this.feature = new Array(this.length);
 		for (var i=0, f=list[0]; i < this.length; f=list[++i]) {
 			this.feature[i] = {
-				element: f,
+				tag: f,
 				dot: dots.appendChild(document.createElement('li')).appendChild(document.createElement('a')),
 				photo: Features.byClass.get(f, 'featurePhoto')[0],
 				duration: (f.getAttribute('duration') || defaultduration) * 1000
 			}
-			f.setAttribute("aria-hidden", i?"true":"false");
-			i && (f.className += ' hiddenFeature');
+			this.feature[i].dot.onfocus = this.wait;
+			for (var a=f.getElementsByTagName('a'), j=a.length; j--; a[j].onfocus=this.focused, a[j].onblur=this.blurred);
+			i && (f.className+=' hiddenFeature');
 		}
-		this.createCallbacks();
-		for (var btn=[{id:'Back',txt:'Previous'}, {id:'Next',txt:'Next'}], i=btn.length, b; i-- && (b=btn[i]);) {
+		for (var btn=[{t:'Back',f:'back'}, {t:'Next',f:'next'}], i=2, b; i && (b=btn[--i]); a.href=jslink+b.f+'();') {
 			var a = document.createElement('a');
-			a.className = 'feature'+b.id+'Btn';
-			a.appendChild(document.createTextNode(b.txt + " Feature"));
-			element.appendChild(a).href = jslink + b.id + '();';
+			a.className = 'feature'+b.t+'Btn';
+			a.setAttribute("aria-hidden", "true");
+			a.appendChild(document.createTextNode(b.t));
+			tag.appendChild(a).onfocus = this.wait;
 		}
-		var dotchar = "•"; dotchar.length==1 || (dotchar = '*');
-		for (var i=this.length, a, n; (n = i--) && (a=this.feature[i].dot);) {
-			a.appendChild(document.createTextNode(dotchar));
-			a.setAttribute("aria-label", "Feature " + n);
-			a.setAttribute("title", Features.byClass.get(this.feature[i].element,'featureTitle')[0].getAttribute("title"));
-			a.href = jslink + 'Jump('+n+')';
+		var bullet = "•"; bullet.length==1 || (bullet = '*');
+		for (var i=this.length, a; i-- && (a=this.feature[i].dot); a.href=jslink+'jump('+i+')') {
+			a.appendChild(document.createTextNode(bullet));
+			a.setAttribute("title", Features.byClass.get(this.feature[i].tag,'featureTitle')[0].getAttribute("title"));
 		}
-		element.appendChild(dots).className = 'featuresIndex';
+		tag.appendChild(dots).className = 'featuresIndex';
 		this.feature[0].dot.className = 'featureIndex';
-		element.className += ' jsFeatures';
-		element.onmouseover = this.wait;
-		for (var a=element.getElementsByTagName('a'), i=a.length; i--; a[i].onfocus=this.wait);
+		tag.className += ' jsFeatures';
+		tag.onmouseover = this.wait;
 		this.wait();
 	},
-	Next: function() { var i=this.getNext(); this.transition(i?"Next":"Wrap", i); },
-	Back: function() { this.transition(this.idx?"Back":"ReverseWrap", this.getBack()); },
-	Jump: function(i) { this.transition("Jump", --i); },
-	createCallbacks: function() {
-		var box=this;
-		box.Auto = function() { box.timer=0; var i=box.getNext(); box.transition(i?"Auto":"AutoWrap", i); };
+	next: function() { var i=this.getNext(); this.transition(i?"Next":"Wrap", i); },
+	back: function() { this.transition(this.idx?"Back":"WrapBack", this.getBack()); },
+	jump: function(i) { this.transition("Jump", i); },
+	createCallbacks: function(box) {
+		box.auto = function() { box.timer=0; var i=box.getNext(); box.transition(i?"Auto":"Cycle", i); };
 		box.trans = {
 			old: 0, next: 0, name: '',
 			set: function(transname, old_idx, next_idx) {
-				if (box.getBusy()) {
-					this.old=box.feature[old_idx], this.next = box.feature[next_idx], this.name = transname;
+				if (!box.busy) {
+					box.timer && window.clearTimeout(box.timer);
+					this.old=box.feature[old_idx], this.next=box.feature[next_idx], this.name=transname;
 					Features.transitioner.set(box, this);
-					return true;
+					return (box.busy = true);
 				}
 				return false;
 			},
 			go: function() { Features.transitioner.go(box, box.trans); },
 			end: function() {
-				(box.trans.old != box.trans.next) && (box.trans.old.element.className = 'hiddenFeature');
-				box.setBusy(false);
+				box.tag.className = 'features jsFeatures';
+				(box.trans.next!=box.trans.old) && (box.trans.old.tag.className = 'feature hiddenFeature');
+				box.busy = false;
 				box.wait();
 			}
 		};
 		box.wait = function() {
 			box.timer && window.clearTimeout(box.timer);
 			var d=box.feature[box.idx].duration;
-			box.timer = d && window.setTimeout(box.Auto, Math.max(d, 1000)) || 0;
+			box.timer = d && window.setTimeout(box.auto, Math.max(d, 1000)) || 0;
 		}
+		box.focused = function() {
+			var i=box.length, f=this;
+			for (; f && !f.className.match(/^feature\b/); f=f.parentNode)
+				if (f.className=="featureLinks") f.className += ' featureLinksFocused';
+			while((i--) && (box.feature[i].tag!=f)); // set i = feature # with focused link
+			(i!=box.idx) && box.jump(i) || box.wait();
+		},
+		box.blurred = function() {(this.className=="featureLink")&&(this.parentNode.parentNode.className='featureLinks');}
 	},
 	getNext: function() { return (this.idx + 1) % this.length; },
 	getBack: function() { return (this.idx + this.length - 1) % this.length; },
-	setBusy: function(b) { this.container.setAttribute("aria-busy", String(b)); return b; },
-	getBusy: function() {
-		this.timer && window.clearTimeout(this.timer);
-		return (this.container.getAttribute("aria-busy")=='true') ? false : this.setBusy(true);
-	},
 	transition: function(transname, idx) {
 		if (this.trans.set(transname, this.idx, idx)) {
-			this.feature[this.idx].element.setAttribute("aria-hidden", "true");
-			this.feature[idx].element.setAttribute("aria-hidden", "false");
 			this.feature[this.idx].dot.className = '';
 			this.feature[idx].dot.className = 'featureIndex';
 			this.idx = idx;
@@ -120,20 +122,20 @@ Features.Transitioners = {
 				return this.CSS;
 		return this.StopMotion.init();
 	},
-	CSS: {	// for browsers that support Transitions
+	CSS: {	// for browsers with Transitions
 		set: function(box, t) {
-			box.container.className = 'features jsFeatures featuresTransition'+t.name;
-			t.next.element.className = 'feature featureTransitionIn feature'+t.name+'In';
+			box.tag.className = 'features jsFeatures featuresTransition'+t.name;
+			t.next.tag.className = 'feature featureTransitionIn feature'+t.name+'In';
 			window.setTimeout(t.go, 30);
 		},
 		go: function(box, t) {
-			box.container.className += ' featuresTransition';
-			t.old.element.className = 'feature featureTransitionOut feature'+t.name+'Out';
-			t.next.element.className = 'feature';
+			box.tag.className += ' featuresTransition';
+			t.old.tag.className = 'feature featureTransitionOut feature'+t.name+'Out';
+			t.next.tag.className = 'feature';
 			window.setTimeout(t.end, 1001);
 		}
 	},
-	StopMotion: { // for old-fashioned browsers that don't support CSS transitions
+	StopMotion: {	// for old browsers without Transitions
 		init: function() {
 			var s = this.stops = 24, c = this.curve = new Array(s);
 			for (var d=100/(s*s); s--; c[s] = Math.floor(d*s*s));
@@ -143,18 +145,18 @@ Features.Transitioners = {
 			var p = t.next.photo.style;
 			p.left = p.top = 0;
 			switch (t.name) {
-				case "Back": case "ReverseWrap": p.left = '-100%'; break;
+				case "Back": case "WrapBack": p.left = '-100%'; break;
 				case "Jump": p.top = '80%'; break;
 				default: p.left = '100%';
 			}
-			t.next.element.className = 'feature';
+			t.next.tag.className = 'feature';
 			t.remaining = this.stops;
 			t.interval = window.setInterval(t.go, Math.floor(800 / this.stops));
 		},
 		go: function(box, t) {
 			var i = --t.remaining, oldphoto = t.old.photo.style, newphoto = t.next.photo.style;
 			switch (t.name) {
-				case "Back": case "ReverseWrap":
+				case "Back": case "WrapBack":
 					oldphoto.left = (100 - this.curve[i]) + '%';
 					newphoto.left = (-this.curve[i]) + '%';
 					break;
