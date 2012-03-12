@@ -55,9 +55,10 @@ Features.Box.prototype = {
 			tag.appendChild(a).onfocus = this.wait;
 		}
 		var bullet = "•"; bullet.length==1 || (bullet = '*');
-		for (var i=this.length, a; i-- && (a=this.feature[i].dot); a.href=jslink+'jump('+i+')') {
+		for (var i=this.length, a, t; i-- && (a=this.feature[i].dot); a.href=jslink+'jump('+i+')') {
 			a.appendChild(document.createTextNode(bullet));
-			a.setAttribute("title", Features.byClass.get(this.feature[i].tag,'featureTitle')[0].getAttribute("title"));
+			t = Features.byClass.get(this.feature[i].tag,'featureTitle');
+			if (t.length) a.setAttribute("title", t[0].getAttribute("title"));
 		}
 		tag.appendChild(dots).className = 'featuresIndex';
 		this.feature[0].dot.className = 'featureIndex';
