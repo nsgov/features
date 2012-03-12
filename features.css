@@ -247,7 +247,6 @@
 }
 
 .featureTransitionOut .featureOverlay, .hiddenFeature .featureOverlay {
-	background: red;
 	height: 1px;
 	margin-top: -1px;
 	overflow:hidden;
