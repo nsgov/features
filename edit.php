@@ -24,7 +24,7 @@ function displayForm() {
 		<li>Download the XML file, and upload it to your features/content/ directory</li>
 		<li>Edit features/features.xml to put it in rotation.</li>
 	</ul>
-	<form action="./" method="post">
+	<form action="<?php echo $PHP_SELF; ?>" method="post">
 		<dl>
 			<dt>ID:</dt>
 			<dd><input type="text" name="id" value="<?php echoPost('id', $ymd.'-keyword');?>" maxlength="50"/></dd>
