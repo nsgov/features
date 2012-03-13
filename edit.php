@@ -14,14 +14,14 @@ function displayForm() {
 	<h1>Create New Feature Content</h1>
 	<ul>
 		<li>Fill in the form, unused fields can be left blank</li>
+		<li>Download the XML file, and upload it to your features/content/ directory</li>
 		<li>Photo:<ul>
 			<li>Scale/crop the image
 				<small>(512×288px for most pages, 625×352px for gov homepage)</small></li>
-			<li>The filename should be the same as the feature ID + .jpg</li>
+			<li>The filename should be the same as the XML file, but with a .jpg extension.</li>
 			<li>Upload it to your features/photos/ folder</li>
 		</ul></li>
-		<li>Download the XML file, and upload it to your features/content/ directory</li>
-		<li>Edit features/features.xml to put it in rotation.</li>
+		<li>Edit features/features.xml to put the feature in rotation.</li>
 	</ul>
 	<form action="<?php echo $PHP_SELF; ?>" method="post">
 		<dl>
