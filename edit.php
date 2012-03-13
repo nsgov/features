@@ -20,7 +20,6 @@ function displayForm() {
 			<li>The filename should be the same as the feature ID + .jpg</li>
 			<li>Upload it to your features/photos/ folder</li>
 		</ul></li>
-		<li>If there is a Social Media Release, make the feature ID the same as the SMR ID</li>
 		<li>Download the XML file, and upload it to your features/content/ directory</li>
 		<li>Edit features/features.xml to put it in rotation.</li>
 	</ul>
@@ -55,12 +54,12 @@ function displayForm() {
 				<h2>News Releases:</h2>
 				<p>English: details.asp?id=<input type="text" name="release_en" value="<?php echoPost('release_en');?>" maxlength="11"/></p>
 				<p>Français: details.asp?id=<input type="text" name="release_fr" value="<?php echoPost('release_fr');?>" maxlength="11"/></p>
-				<p>SMR? <input type="checkbox" name="smr" <?php echo (getPost('smr')?'checked="checked"':'');?> /></p>
+				<p>SMR ID: /news/smr/<input type="checkbox" name="smr" <?php echo getPost('smr');?> maxlength="50" />/</p>
 				<div class="other">
 					Other:
 					<dl>
 						<dt>text:</dt><dd><input type="text" name="linktext" value="<?php echoPost('linktext'); ?>" maxlength="50"/></dd>
-						<dt>href:</dt><dd><input type="text" name="linkhref" alue="<?php echoPost('linkhref'); ?>" /></dd>
+						<dt>href:</dt><dd><input type="text" name="linkhref" value="<?php echoPost('linkhref'); ?>" /></dd>
 					</dl>
 					<br class="clear"/>
 					<p><small>
@@ -104,7 +103,7 @@ function generateXML()
 	<release lang="fr" id="<?php echoPost('release_fr'); ?>"/>
 <?php }
 	if(getPost('smr')) { ?>
-	<smr/>
+	<smr id="<?php echoPost('smr'); ?>"/>
 <?php }
 	if(getPost('linkhref')) { ?>
 	<link href="<?php echoPost('linkhref'); ?>" title="<?php echoPost('linktext'); ?>"/>
