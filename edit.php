@@ -86,7 +86,7 @@ function generateXML()
 	$id = getPost('id', $date.'-feature');
 	header("Content-type: text/xml");
 	header("Content-disposition: attachment;filename=".$id.'.xml');
-	?><featurestory id="<?php echo $id;?>" xmlns="http://gov.ns.ca/features">
+	?><feature id="<?php echo $id;?>" xmlns="http://gov.ns.ca/features">
 	<title><?php echoPost('title'); ?></title>
 	<published date="<?php echo $date; ?>"/>
 	<summary>
@@ -95,20 +95,22 @@ function generateXML()
 	</summary>
 	<photo alt="<?php echoPost('alt'); ?>"
 	       cutline="<?php echoPost('cutline')?>"/>
+	<links>
 <?php
 	if(getPost('release_en')) { ?>
-	<release lang="en" id="<?php echoPost('release_en'); ?>"/>
+		<release lang="en" id="<?php echoPost('release_en'); ?>"/>
 <?php }
 	if(getPost('release_fr')) { ?>
-	<release lang="fr" id="<?php echoPost('release_fr'); ?>"/>
+		<release lang="fr" id="<?php echoPost('release_fr'); ?>"/>
 <?php }
 	if(getPost('smr')) { ?>
-	<smr id="<?php echoPost('smr'); ?>"/>
+		<smr id="<?php echoPost('smr'); ?>"/>
 <?php }
 	if(getPost('linkhref')) { ?>
-	<link href="<?php echoPost('linkhref'); ?>" title="<?php echoPost('linktext'); ?>"/>
+		<link href="<?php echoPost('linkhref'); ?>" title="<?php echoPost('linktext'); ?>"/>
 <?php  } ?>
-</featurestory>
+	</links>
+</feature>
 <?php
 }
 
