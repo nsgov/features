@@ -5,7 +5,7 @@ function getPost($name, $fallback='') {
 }
 
 function echoPost($name, $fallback='') {
-	echo htmlspecialchars(getPost($name, $fallback));
+	echo htmlspecialchars(getPost($name, $fallback), ENT_COMPAT, 'UTF-8');
 }
 
 function displayForm() {
