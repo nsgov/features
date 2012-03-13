@@ -18,7 +18,7 @@ function displayForm() {
 		<li>Photo:<ul>
 			<li>Scale/crop the image
 				<small>(512×288px for most pages, 625×352px for gov homepage)</small></li>
-			<li>The filename should be the same as the XML file, but with a .jpg extension.</li>
+			<li>The photo filename should be the same as the XML filename, but with a .jpg extension.</li>
 			<li>Upload it to your features/photos/ folder</li>
 		</ul></li>
 		<li>Edit features/features.xml to put the feature in rotation.</li>
