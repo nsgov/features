@@ -9,6 +9,7 @@ function echoPost($name, $fallback='') {
 }
 
 function displayForm() {
+	$ymd = date('Y-m-d');
 ?>
 	<h1>Create New Feature Content</h1>
 	<ul>
@@ -26,13 +27,13 @@ function displayForm() {
 	<form action="./" method="post">
 		<dl>
 			<dt>ID:</dt>
-			<dd><input type="text" name="id" value="<?php echoPost('id', date('Y-m-d').'-keyword');?>" maxlength="50"/></dd>
+			<dd><input type="text" name="id" value="<?php echoPost('id', $ymd.'-keyword');?>" maxlength="50"/></dd>
 			
 			<dt>Title:</dt>
 			<dd><input type="text" name="title" value="<?php echoPost('title');?>" maxlength="50"/></dd>
 
 			<dt>Publish Date:</dt>
-			<dd><input type="text" name="date" value="<?php echoPost('date', date('Y-m-d'));?>" maxlength="10"/></dd>
+			<dd><input type="text" name="date" value="<?php echoPost('date', $ymd);?>" maxlength="10"/></dd>
 
 			<!--dt>Publish Time:</dt>
 			<dd><input type="text" name="time" value="<?php echoPost('time');?>" maxlength="10"/></dd-->
@@ -51,6 +52,7 @@ function displayForm() {
 
 			<dt>Links:</dt>
 			<dd class="releases">
+				<h2>News Releases:</h2>
 				<p>English: details.asp?id=<input type="text" name="release_en" value="<?php echoPost('release_en');?>" maxlength="11"/></p>
 				<p>Français: details.asp?id=<input type="text" name="release_fr" value="<?php echoPost('release_fr');?>" maxlength="11"/></p>
 				<p>SMR? <input type="checkbox" name="smr" <?php echo (getPost('smr')?'checked="checked"':'');?> /></p>
