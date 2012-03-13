@@ -10,7 +10,7 @@ function echoPost($name, $fallback='') {
 
 function displayForm() {
 ?>
-	<h1>Create a New Feature</h1>
+	<h1>Create New Feature Content</h1>
 	<ul>
 		<li>Fill in the form, unused fields can be left blank</li>
 		<li>Photo:<ul>
@@ -20,8 +20,8 @@ function displayForm() {
 			<li>Upload it to your features/photos/ folder</li>
 		</ul></li>
 		<li>If there is a Social Media Release, make the feature ID the same as the SMR ID</li>
-		<li>Download the XML file, and upload it to your features/story/ directory</li>
-		<li>Edit features/featurestories.xml to put it on the homepage.</li>
+		<li>Download the XML file, and upload it to your features/content/ directory</li>
+		<li>Edit features/features.xml to put it in rotation.</li>
 	</ul>
 	<form action="./" method="post">
 		<dl>
