@@ -45,10 +45,10 @@ function displayForm() {
 			<dd><input type="text" name="keywords" value="<?php echoPost('keywords');?>" maxlength="250"/></dd-->
 
 			<dt>Cutline:</dt>
-			<dd><input type="text" name="cutline" value="<?php echoPost('cutline');?>" maxlength="250"/></dd>
+			<dd><input type="text" name="cutline" value="<?php echoPost('cutline');?>" maxlength="255"/></dd>
 
 			<dt>Alt Text:</dt>
-			<dd><input type="text" name="alt" value="<?php echoPost('alt');?>" maxlength="250"/></dd>
+			<dd><input type="text" name="alt" value="<?php echoPost('alt');?>" maxlength="255"/></dd>
 
 			<dt>Links:</dt>
 			<dd class="releases">
@@ -70,7 +70,6 @@ function displayForm() {
 					</small></p>
 				</div>
 			</dd>
-
 		</dl>
 		<div class="actions">
 			<input type="submit" value="Download XML"/>
@@ -118,7 +117,7 @@ function showPage() {
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Create Feature Story</title>
 	<style type="text/css">
 		input[type="text"] {
