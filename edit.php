@@ -63,6 +63,11 @@ function displayForm() {
 						<dt>href:</dt><dd><input type="text" name="linkhref" alue="<?php echoPost('linkhref'); ?>" /></dd>
 					</dl>
 					<br class="clear"/>
+					<p><small>
+						You can customize the links by editing the xml file after you download it.
+						The order of the links can be changed, and there is no limit to the number of links for any given link type.
+						The first link is used as the href for the photo and the feature title.
+					</small></p>
 				</div>
 			</dd>
 
