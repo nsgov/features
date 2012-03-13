@@ -54,7 +54,7 @@ function displayForm() {
 				<h2>News Releases:</h2>
 				<p>English: details.asp?id=<input type="text" name="release_en" value="<?php echoPost('release_en');?>" maxlength="11"/></p>
 				<p>Français: details.asp?id=<input type="text" name="release_fr" value="<?php echoPost('release_fr');?>" maxlength="11"/></p>
-				<p>SMR ID: /news/smr/<input type="checkbox" name="smr" <?php echo getPost('smr');?> maxlength="50" />/</p>
+				<p>SMR ID: /news/smr/<input type="text" name="smr" <?php echo getPost('smr');?> maxlength="50" />/</p>
 				<div class="other">
 					Other:
 					<dl>
