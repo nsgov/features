@@ -14,9 +14,10 @@ function displayForm() {
 	<ul>
 		<li>Fill in the form, unused fields can be left blank</li>
 		<li>Photo:<ul>
-			<li>Scale/crop the image to 625x352px</li>
+			<li>Scale/crop the image
+				<small>(<em>512</em>✕<em>288</em>px for most pages, <em>625</em>✕<em>352</em>px for gov homepage)</small></li>
 			<li>The filename should be the same as the feature ID + .jpg</li>
-			<li>Upload it to features/photos/</li>
+			<li>Upload it to your features/photos/ folder</li>
 		</ul></li>
 		<li>If there is a Social Media Release, make the feature ID the same as the SMR ID</li>
 		<li>Download the XML file, and upload it to your features/story/ directory</li>
