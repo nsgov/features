@@ -1,9 +1,7 @@
 <?php
 
 function getPost($name, $fallback='') {
-	if( isset($_POST[$name]) )
-		return $_POST[$name];
-	return $fallback;
+	return isset($_POST[$name]) ? $_POST[$name] : $fallback;
 }
 
 function echoPost($name, $fallback='') {
