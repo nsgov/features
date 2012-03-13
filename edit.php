@@ -50,25 +50,26 @@ function displayForm() {
 			<dd><input type="text" name="alt" value="<?php echoPost('alt');?>" maxlength="255"/></dd>
 
 			<dt>Links:</dt>
-			<dd class="releases">
-				<h2>News Releases:</h2>
-				<p>English: details.asp?id=<input type="text" name="release_en" value="<?php echoPost('release_en');?>" maxlength="11"/></p>
-				<p>Français: details.asp?id=<input type="text" name="release_fr" value="<?php echoPost('release_fr');?>" maxlength="11"/></p>
-				<p>SMR ID: /news/smr/<input type="text" name="smr" <?php echo getPost('smr');?> maxlength="50" />/</p>
+			<dd>
+				<div class="releases">
+					News Releases:
+					<p>English: details.asp?id=<input type="text" name="release_en" value="<?php echoPost('release_en');?>" maxlength="11"/></p>
+					<p>Français: details.asp?id=<input type="text" name="release_fr" value="<?php echoPost('release_fr');?>" maxlength="11"/></p>
+				</div>
+				<div class="smr">
+					<p>SMR ID: /news/smr/<input type="text" name="smr" <?php echo getPost('smr');?> maxlength="50" />/</p>
+				</div>
 				<div class="other">
 					Other:
-					<dl>
-						<dt>text:</dt><dd><input type="text" name="linktext" value="<?php echoPost('linktext'); ?>" maxlength="50"/></dd>
-						<dt>href:</dt><dd><input type="text" name="linkhref" value="<?php echoPost('linkhref'); ?>" /></dd>
-					</dl>
-					<br class="clear"/>
-					<p><small>
-						You can customize the links by editing the xml file after you download it.
-						The order of the links can be changed, and there is no limit to the number of links for any given link type.
-						The first link is used as the href for the photo and the feature title.
-						All tags in the links section support the lang and title attributes.
-					</small></p>
+					<p>text: <input type="text" name="linktext" value="<?php echoPost('linktext'); ?>" maxlength="50"/></p>
+					<p>href: <input type="text" name="linkhref" value="<?php echoPost('linkhref'); ?>" /></p>
 				</div>
+				<div class="linksnote"><p><small>
+					You can customize the links by editing the xml file after you download it.
+					The order of the links can be changed, and there is no limit to the number of links for any given link type.
+					The first link is used as the href for the photo and the feature title.
+					All tags in the links section support the lang and title attributes.
+				</small></p></div>
 			</dd>
 		</dl>
 		<div class="actions">
@@ -145,10 +146,14 @@ function showPage() {
 			border: 4px solid #789;
 			margin: 0 0 1em 0;
 		}
-		.other {
-			border: 2px solid #ccc;
-			margin: 1em;
+		dd div {
+			border: 3px solid #ccc;
+			border-radius: 1em;
+			margin: 0.5em;
+			padding: 0.5em;
+			width: 480px;
 		}
+		dd .other input { width: 80%; }
 		.actions {
 			clear: both;
 		}
