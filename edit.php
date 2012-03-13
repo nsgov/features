@@ -16,7 +16,7 @@ function displayForm() {
 		<li>Fill in the form, unused fields can be left blank</li>
 		<li>Photo:<ul>
 			<li>Scale/crop the image
-				<small>(<em>512</em>✕<em>288</em>px for most pages, <em>625</em>✕<em>352</em>px for gov homepage)</small></li>
+				<small>(512×288px for most pages, 625×352px for gov homepage)</small></li>
 			<li>The filename should be the same as the feature ID + .jpg</li>
 			<li>Upload it to your features/photos/ folder</li>
 		</ul></li>
