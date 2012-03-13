@@ -67,6 +67,7 @@ function displayForm() {
 						You can customize the links by editing the xml file after you download it.
 						The order of the links can be changed, and there is no limit to the number of links for any given link type.
 						The first link is used as the href for the photo and the feature title.
+						All tags in the links section support the lang and title attributes.
 					</small></p>
 				</div>
 			</dd>
