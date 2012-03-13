@@ -10,7 +10,7 @@ function echoPost($name, $fallback='') {
 
 function displayForm() {
 ?>
-	<H1>Create a Feature Story</h1>
+	<h1>Create a New Feature</h1>
 	<ul>
 		<li>Fill in the form, unused fields can be left blank</li>
 		<li>Photo:<ul>
