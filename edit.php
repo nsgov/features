@@ -86,7 +86,7 @@ function generateXML()
 	$id = getPost('id', $date.'-feature');
 	header("Content-type: text/xml");
 	header("Content-disposition: attachment;filename=".$id.'.xml');
-	?><feature id="<?php echo $id;?>" xmlns="http://gov.ns.ca/features">
+	?><feature id="<?php echo $id;?>" xmlns="http://novascotia.ca/features/v1">
 	<title><?php echoPost('title'); ?></title>
 	<published date="<?php echo $date; ?>"/>
 	<summary>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:transform version="1.0"
                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-               xmlns:f="http://gov.ns.ca/features"
+               xmlns:f="http://novascotia.ca/features/v1"
                exclude-result-prefixes="f"
 ><xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
 <xsl:strip-space elements="*"/>
