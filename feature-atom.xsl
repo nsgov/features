@@ -50,7 +50,7 @@
 	<xsl:variable name="href"><xsl:choose><xsl:when test="@href"><xsl:value-of select="@href"/></xsl:when><xsl:otherwise><xsl:apply-templates select="." mode="href"/></xsl:otherwise></xsl:choose></xsl:variable>
 	<xsl:variable name="lang"><xsl:choose><xsl:when test="@lang"><xsl:value-of select="@lang"/></xsl:when><xsl:otherwise>en</xsl:otherwise></xsl:choose></xsl:variable>
 	<xsl:variable name="rel"><xsl:choose><xsl:when test="position()=1">alternate</xsl:when><xsl:otherwise>related</xsl:otherwise></xsl:choose></xsl:variable>
-	<link rel="${rel}" href="{$href}" hreflang="{$lang}" xml:lang="${lang}" title="{$text}" dc:type="{local-name()}"/>
+	<link rel="{$rel}" href="{$href}" hreflang="{$lang}" xml:lang="{$lang}" title="{$text}" feature:linktype="{local-name()}"/>
 </xsl:template>
 
 </xsl:transform>
