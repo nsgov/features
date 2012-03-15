@@ -25,14 +25,15 @@
 <xsl:template match="f:feature">
 	<xsl:param name="duration"/>
 	<xsl:variable name="defaulthref"><xsl:call-template name="getdefaulthref"/></xsl:variable>
-	<xsl:variable name="pubdate" select="f:published/@date"/>
+	<xsl:variable name="datetime" select="f:published/@datetime"/>
+	<xsl:variable name="pubdate" select="substring($datetime, 1, 10)"/>
 	<article class="feature">
 		<xsl:if test="$duration"><xsl:attribute name="data-duration"><xsl:value-of select="$duration"/></xsl:attribute></xsl:if>
 		<a class="featurePhoto" href="{$defaulthref}"><img src="{$PHOTOPATH}{@id}.jpg" alt="{f:photo/@alt}" title="{f:photo/@cutline}" /></a>
 		<div class="featureOverlay">
 			<div class="featureContent">
 				<h1 class="featureTitle" title="{f:title} ({$pubdate})"><a href="{$defaulthref}"><xsl:value-of select="f:title"/></a></h1>
-				<time pubdate="pubdate" datetime="{$pubdate}" class="featurePublished"><xsl:value-of select="$pubdate"/></time>
+				<time pubdate="pubdate" datetime="{$datetime}" class="featurePublished"><xsl:value-of select="$pubdate"/></time>
 				<div class="featureSummary">
 					<p><xsl:value-of select="f:summary"/></p>
 				</div>

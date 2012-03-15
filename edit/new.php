@@ -9,7 +9,8 @@ function echoPost($name, $fallback='') {
 }
 
 function displayForm() {
-	$ymd = date('Y-m-d');
+	$datetime = date(DATE_W3C);
+	$ymd = substr($datetime, 0, 10);
 ?>
 	<h1>Create New Feature Content</h1>
 	<ul>
@@ -23,7 +24,7 @@ function displayForm() {
 		</ul></li>
 		<li>Edit features/features.xml to put the feature in rotation.</li>
 	</ul>
-	<form action="<?php echo $PHP_SELF; ?>" method="post">
+	<form action="" method="post">
 		<dl>
 			<dt>ID:</dt>
 			<dd><input type="text" name="id" value="<?php echoPost('id', $ymd.'-keyword');?>" maxlength="50"/></dd>
@@ -31,18 +32,9 @@ function displayForm() {
 			<dt>Title:</dt>
 			<dd><input type="text" name="title" value="<?php echoPost('title');?>" maxlength="50"/></dd>
 
-			<dt>Publish Date:</dt>
-			<dd><input type="text" name="date" value="<?php echoPost('date', $ymd);?>" maxlength="10"/></dd>
-
-			<!--dt>Publish Time:</dt>
-			<dd><input type="text" name="time" value="<?php echoPost('time');?>" maxlength="10"/></dd-->
-
 			<dt>Summary:</dt>
 			<dd><textarea name="summary"><?php echoPost('summary');?></textarea></dd>
 			
-			<!--dt>Keywords:</dt>
-			<dd><input type="text" name="keywords" value="<?php echoPost('keywords');?>" maxlength="250"/></dd-->
-
 			<dt>Cutline:</dt>
 			<dd><input type="text" name="cutline" value="<?php echoPost('cutline');?>" maxlength="255"/></dd>
 
@@ -81,6 +73,7 @@ function displayForm() {
 
 function generateXML()
 {
+	$datetime = date(DATE_W3C);
 	$date = getPost('date', date('Y-m-d'));
 	//$keywords = preg_split('/\s+/', trim(getPost('keywords')));
 	//$id = $date . '-' . (count($keywords) ? $keywords[0] : 'feature');
@@ -89,7 +82,8 @@ function generateXML()
 	header("Content-disposition: attachment;filename=".$id.'.xml');
 	?><feature id="<?php echo $id;?>" xmlns="http://novascotia.ca/features/v1">
 	<title><?php echoPost('title'); ?></title>
-	<published date="<?php echo $date; ?>"/>
+	<published datetime="<?php echo $datetime; ?>"/>
+	<updated datetime="<?php echo $datetime; ?>"/>
 	<summary>
 		<?php echoPost('summary'); ?>
 
