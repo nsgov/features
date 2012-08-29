@@ -51,7 +51,7 @@
 
 <xsl:template match="feature:release" mode="text">Read the release</xsl:template>
 <xsl:template match="feature:release[lang('fr')]" mode="text">Communiqué de presse</xsl:template>
-<xsl:template match="feature:release" mode="href">http://novascotia.ca/news/details.asp?id=<xsl:value-of select="@id"/></xsl:template>
+<xsl:template match="feature:release" mode="href">http://novascotia.ca/news/release/?id=<xsl:value-of select="@id"/></xsl:template>
 <xsl:template match="feature:smr" mode="text">Social Media Release</xsl:template>
 <xsl:template match="feature:smr" mode="href">http://novascotia.ca/news/smr/<xsl:choose><xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when><xsl:otherwise><xsl:value-of select="../../@id"/></xsl:otherwise></xsl:choose>/</xsl:template>
 <xsl:template match="feature:video" mode="text">Watch the Video</xsl:template>

@@ -99,9 +99,9 @@ function displayForm() {
 			<dt>News Releases:</dt>
 			<dd class="releases">
 				<p><label for="release_en">English Release ID:</label>
-					details.asp?id=<input id="release_en" type="text" name="release_en" value="<?php echoPost('release_en');?>" maxlength="11" pattern="<?php echopattern('release_en');?>" />
+					/news/release/?id=<input id="release_en" type="text" name="release_en" value="<?php echoPost('release_en');?>" maxlength="11" pattern="<?php echopattern('release_en');?>" />
 				</p>
-				<p><label for="release_fr">en français:</label> details.asp?id=<input type="text" name="release_fr" value="<?php echoPost('release_fr');?>" maxlength="11" pattern="<?php echopattern('release_fr');?>" /></p>
+				<p><label for="release_fr">en français:</label> /news/release/?id=<input type="text" name="release_fr" value="<?php echoPost('release_fr');?>" maxlength="11" pattern="<?php echopattern('release_fr');?>" /></p>
 			</dd>
 			
 			<dt>SMR</dt>
