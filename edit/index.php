@@ -1,7 +1,9 @@
 <?php
-error_reporting(-1);
-require_once($_SERVER['DOCUMENT_ROOT'].'/code/functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/code/class/xmltransformer.class.php');
+error_reporting(/*$_SERVER['REQUEST_METHOD']=='POST'?0:*/-1);
+require_once(__DIR__.'/../functions.php');
+require_once(__DIR__.'/../class/xmltransformer.class.php');
+
+date_default_timezone_set("Canada/Atlantic");
 
 class FeatureFeed {
 	public $xmlns = 'http://www.w3.org/2005/Atom';
@@ -93,39 +95,73 @@ function hfs($s) { return htmlspecialchars($s, ENT_COMPAT, 'UTF-8'); }
 function displayForm($feed) {
 	$entries = $feed->getEntryIDs();
 	$add = getQuery('add', false);
+	if ($add && (!in_array($add, $entries)))
+		array_unshift($entries, $add);
+	$missing = false;
+	foreach ($entries as $k => $v) {
+		$path = '../content/'.$v.'.xml';
+		$entries[$k] = array('id'=>$v, 'path'=>$path, 'exists'=>file_exists($path));
+		if (!$entries[$k]['exists'])
+			$missing = true;
+	}
+	if ($missing) { ?>
+		<div class="error">
+		<ol start="<?php echo $add?0:1;?>">
+		<?php foreach($entries as $e) { $x = $e['exists']; ?>
+			<li class="xmlfile-<?php echo $x?'exists':'missing';?>">
+			<?php echo $x ? '✔' : '✘' ?>
+			<a href="<?php echo htmlspecialchars($e['path']);?>"><?php echo htmlspecialchars($e['id']);?>.xml</a>
+			<?php if ($x) {
+				$stat = stat($e['path']);
+				echo $stat['size'] . ' bytes';
+				} else
+					echo 'Does not exist.'?>
+			</li>
+		<?php } ?>
+		</ol>
+		<p>
+			Make sure all xml files are uploaded to the content folder before downloading <?php echo $feed->getFilename(); ?>
+		</p>
+		</div>
+	<?php }
 ?>
 	<form action="index.php" method="post">
 		<h1><label for="lineup">Feature Line-up:</label></h1>
 		<small>(Enter feature IDs, one per line)</small>
 		<textarea id="lineup" name="lineup" rows="10" cols="60"><?php
-			if (($add) && (!in_array($add, $entries)))
-				echo $add."\n";
 			foreach ($entries as $entry) {
-				echo $entry."\n";
+				echo $entry['id']."\n";
 			}
 		?></textarea>
-		<input type="Submit" value="Download <?php echo $feed->getFilename(); ?>" />
+		<div class="actions">
+		   <input type="Submit" class="action" value="Download <?php echo $feed->getFilename(); ?>" />
+		</div>
 	</form>
 <?php
 }
 
 function showPage($feed) {
+	$cssfile = file_exists("edit.css") ? "edit.css" : "/clf/argyle/features/edit.css";
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Feature Line-up</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo $cssfile; ?>"/>
 	<style type="text/css">
 		.clear { clear: both; }
 	</style>
 </head>
 <body>
-	<p>
-		<a href="new.php">Create a new Feature</a>
-	</p>
-	<?php displayForm($feed); ?>
-
+	<div id="container">
+		<ul id="steps">
+		<li class="step"><a href="new.php" class="action">Create a new Feature</a></li>
+		<li class="step">
+		<?php displayForm($feed); ?>
+		</li>
+		</ul>
+	</div>
 </body>
 </html>
 <?php
@@ -159,7 +195,9 @@ function generateNewFeed($feed) {
 				#echo "Done with ".$entry->xmlEncoding.".\n";
 			}
 		}
+		#echo "Starting Transformation...\n";
 		$xt->transformData($feed->toString());
+		#echo "Done.\n";
 		$output = '<'.'?xml version="1.0" encoding="utf-8"?' . ">\n" . normalizeLineEndings($xt->toString(), "\n");
 		$ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		$subtype = preg_match('/Version\/5[.0-9]*\sSafari/', $ua) ? 'octet-stream' : 'atom+xml';
@@ -169,7 +207,7 @@ function generateNewFeed($feed) {
 		#echo $feed->toString();
 		#echo "DONE.\n";
 	} catch(Exception $e) {
-		echo "<pre>" . $e->getMessage() . "</pre>\n";
+		echo "<pre>Exception caught: " . $e->getMessage() . "</pre>\n";
 	}
 }
 
@@ -185,6 +223,6 @@ try {
 	else
 		showPage($feed);
 } catch (Exception $e) {
-	echo "<pre>" . $e->getMessage() . "</pre>\n";
+	echo "<pre>Caught Exception: " . $e->getMessage() . "</pre>\n";
 }
 ?>
