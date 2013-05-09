@@ -11,7 +11,7 @@ var FeatureEditor = {
 			'O': ['Ò', 'Ô', 'Ó'],   'o': ['ò', 'ô', 'ó'],
 			'U': ['Ù', 'Û', 'Ú'],   'u': ['ù', 'û', 'ú']
 		}
-		var tags = ['title', 'featureID', 'photofilename', 'photolink', 'downloadBtn', 'contentlink', 'lineuplink'], now = new Date();
+		var tags = ['title', 'featureID', 'featurePhoto', 'photofilename', 'photolink', 'photoUploaded', 'downloadBtn', 'contentlink', 'lineuplink'], now = new Date();
 		for (var i=tags.length, t; i && (t= tags[--i]); this.tags[t] = document.getElementById(t));
 		for (var c in deAccent)
 			for (var i=deAccent[c].length; i--; this.deAccentMap[deAccent[c][i]] = c);
@@ -21,9 +21,10 @@ var FeatureEditor = {
 		this.id_locked = false;
 		this.liveUpdate('title');
 		this.liveUpdate('featureID');
+		this.liveUpdate('photoUploaded');
 		this.tags.title.focus();
 	},
-	deAccentChar: function( c ) { return FeatureEditor.deAccentMap[c] || c; },
+	deAccentChar: function(c) { return FeatureEditor.deAccentMap[c] || c; },
 	deAccent: function(text) {
 		return String(text).replace(/[\u0080-\u00FF]/g, FeatureEditor.deAccentChar);
 	},
@@ -80,6 +81,14 @@ var FeatureEditor = {
 		featureID: function() {
 			FeatureEditor.id_locked = true;
 			FeatureEditor.updateID();
+		},
+		photoUploaded: function() {
+			if (this.checked) {
+				var img = document.createElement('img');
+				img.setAttribute('src', FeatureEditor.tags.photolink.href);
+				FeatureEditor.tags.featurePhoto.appendChild(img);
+			} else
+				FeatureEditor.tags.featurePhoto.innerHTML = '';
 		}
 	}
 };

@@ -1,4 +1,5 @@
 <?php
+error_reporting($_SERVER['REQUEST_METHOD']=='POST'?0:-1);
 
 $ID_REGEX = '[A-Za-z0-9][-A-Za-z0-9]{0,48}[A-Za-z0-9]';
 $RELEASE_REGEX = '(199[89]|20\d\d)(0\d|1[012])([012]\d|3[01])\d{3}';
@@ -11,6 +12,8 @@ $valid_field_patterns = array(
 	'release_fr' => $RELEASE_REGEX,
 	'smr' => $ID_REGEX
 );
+
+date_default_timezone_set("Canada/Atlantic");
 
 function getPost($name, $fallback='') {
 	return isset($_POST[$name]) ? $_POST[$name] : $fallback;
@@ -37,7 +40,7 @@ function displayForm() {
 		<h2>Content</h2>
 		<div class="features">
 			<article class="feature">
-				<div class="featurePhoto">
+				<div class="featurePhoto" id="featurePhoto">
 				</div>
 				<div class="featureOverlay">
 				<fieldset class="featureContent">
@@ -77,7 +80,12 @@ function displayForm() {
 					<li>Scale/crop the image <small>(512×288px for most pages, 625×352px for gov homepage)</small></li>
 					<li>The photo filename should be <span id="photofilename">the Feature ID with a .jpg extension.</span></li>
 				</ul>
-				<p>Upload the image file to <a id="photolink" href="../photos/">your features/photos/ folder</a></p>
+				<p>
+					Upload the image file to
+					<a id="photolink" href="../photos/">your features/photos/ folder</a><br />
+					<input type="checkbox" id="photoUploaded"/>
+					<label for="photoUploaded">Preview uploaded photo</label>
+				</p>
 			</div>
 		</div>
 		<br style="clear: both;"/>
