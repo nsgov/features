@@ -30,7 +30,11 @@
 	        perspective: 1000px;
 }
 
-.jsFeatures .hiddenFeature { z-index: 0; }
+.jsFeatures .hiddenFeature {
+	clip: rect(0 0 0 0); /* ie 6 & 7*/
+	clip: rect(0, 0, 0, 0); /* w3c */
+	z-index: 0;
+}
 
 .features a { border: 0; cursor: pointer; }
 
@@ -53,8 +57,10 @@
 	height: 96px;
 	margin: 0;
 	padding: 24px 8px 0;
+	opacity: 1;
 	overflow: hidden;
 	white-space: normal;
+	transition: opacity 1s;
 }
 
 .featureTitle {
@@ -86,6 +92,130 @@
 	margin: 0;
 	padding: 0;
 	width: 100%;
+}
+
+.featurePhoto {
+	border: 0;
+	text-decoration: none;
+}
+.jsFeatures .featurePhoto {
+	left: 0;
+	opacity: 1;
+	position: relative;
+	top: 0;
+}
+.featurePhoto .featurePlayBtn {
+	background: #888;
+	background-image: url(playbtn.png);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='playbtn.png',sizingMethod='scale');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border: 1px solid #eee;
+	border-radius: 16px;
+	box-shadow: 0px 0px 4px #fff;
+	/*display: inline-block;*/
+	height: 15%;
+	left: 50%;
+	margin: -32px 0 0 -48px/*25% auto*/;
+	min-height: 64px;
+	min-width: 96px;
+	opacity: 0.5; filter: alpha(opacity=50);
+	position: absolute;
+	/*text-indent: -999px;*/
+	top: 50%;
+	width: 15%;
+	-webkit-transition: all 1s;
+	   -moz-transition: all 1s;
+	    -ms-transition: all 1s;
+	     -o-transition: all 1s;
+	        transition: all 1s;
+	-webkit-transform: scale(1, 1);
+	   -moz-transform: scale(1, 1);
+	     -o-transform: scale(1, 1);
+	        transform: scale(1, 1);
+}
+
+.featurePhoto:focus .featurePlayBtn,
+.featurePhoto:hover .featurePlayBtn,
+.featurePhoto:active .featurePlayBtn,
+.featurePlaying .featurePlayBtn {
+	background-color: #06c;
+	border-color: #333;
+	box-shadow: 6px 6px 16px #000;
+	margin: -36px 0 0 -52px;
+	opacity: 0.9; filter: alpha(opacity=90);
+}
+
+.featurePlaying .featurePlayBtn {
+	border-width: 0;
+	box-shadow: 0 0 8px #000;
+	cursor: default;
+	margin: 0 !important;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-transform: scale(-1, 1);
+	   -moz-transform: rotate3d(0,1,0,180deg) translateZ(1px);
+	     -o-transform: scale(-1, 1);
+	        transform: scale(-1, 1);
+	/*-moz-transform: scale(8) rotate3d(0, 1, 0, 180deg);*/
+	z-index: 2;
+}
+
+.featurePlayer {
+	position: absolute;
+	top: -48px;
+	left: 0;
+	right: 0;
+	bottom: 100%;
+	padding: 0 47px;
+	opacity: 0;
+	overflow: visible;
+	z-index: -1;
+	-webkit-transition: opacity 1s;
+	   -moz-transition: opacity 1s;
+	    -ms-transition: opacity 1s;
+	     -o-transition: opacity 1s;
+	        transition: opacity 1s;
+}
+.featurePlaying .featurePlayer {
+	top: 8px;
+	bottom: 128px;
+	opacity: 1;
+	z-index: 4;
+}
+.featurePlayerObject {
+	border: 0;
+	box-shadow: 0 8px 48px #000;
+	width: 100%;
+	height: 100%;
+}
+.featurePlayerClose {
+	background: #333;
+	border: 3px outset #eee;
+	border-radius: 16px;
+	box-shadow: 4px 4px 8px #000;
+	color: white;
+	cursor: pointer;
+	font: bold 18px/18px sans-serif;
+	margin: 7px;
+	text-align: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 32px;
+	height: 32px;
+}
+.featurePlayerClose:focus, .featurePlayerClose:hover {
+	text-decoration: underline;
+}
+.featurePlayerClose:active {
+	border-style: inset;
+	box-shadow: 0 0 6px #000;
+	margin: 9px;
+	text-decoration: underline;
 }
 
 .featureSummary p {
@@ -154,24 +284,34 @@
 }
 .featureLink:link, .featureLink:hover, .featureLink:active, .featureLink:visited { color: #6df; }
 
+.featureControls {display: none;}
+.jsFeatures .featureControls {display:block;}
+
 .featureBackBtn, .featureNextBtn {
 	background: url(featurearrows.png) no-repeat;
+	border: 0;
 	color: #bbb;
+	cursor: pointer;
 	display: block;
-	height: 64px;
+	height: 80px;
 	overflow: hidden;
-	padding-top: 16px;
 	position: absolute;
 	bottom: 0;
+	text-indent: -999px;
+	vertical-align: baseline;
 	width: 47px;
 	z-index: 4;
 }
-.featureBackBtn { background-position: left center;   left: 0; }
+.featureBackBtn { background-position:  left center;   left: 0; }
 .featureNextBtn { background-position: right center; right: 0; }
+.featureBackBtn:focus, .featureBackBtn:hover { background-position:  left 46%; }
+.featureNextBtn:focus, .featureNextBtn:hover { background-position: right 46%; }
+.featureBackBtn:active { background-position:  5% 48%; }
+.featureNextBtn:active { background-position: 95% 48%; }
+
 
 .featuresIndex {
 	bottom: 96px;
-	font: 32px/16px sans-serif;
 	margin: 0 9% !important;
 	padding: 0;
 	position: absolute;
@@ -180,13 +320,17 @@
 	z-index: 6;
 }
 
-.featuresIndex a, .featuresIndex a:link, .featuresIndex a:hover, .featuresIndex a:focus, .featuresIndex a:active, .featuresIndex a:visited {
+.featuresIndex button {
+	background: transparent;
+	border: 0;
 	color: #0cf;
-	text-decoration: none;
-}
-.featuresIndex a {
+	cursor: pointer;
 	display: inline;
-	padding: 0 8px;
+	font: 32px/16px sans-serif;
+	height: 16px;
+	margin: 2px 8px;
+	width: 24px;
+	vertical-align: baseline;
 /*	-webkit-transition: color 1s; */
 	   -moz-transition: color 1s;
 	    -ms-transition: color 1s;
@@ -194,11 +338,12 @@
 	        transition: color 1s;
 }
 
-.featuresIndex a:hover, .featuresIndex a:focus {
+.featuresIndex button:hover, .featuresIndex button:focus {
+	font-size: 36px;
 	text-shadow: 0px 0px 4px #fff;
 }
 
-.featuresIndex .featureIndex:link, .featuresIndex .featureIndex:hover, .featuresIndex .featureIndex:active, .featuresIndex .featureIndex:visited {
+.featuresIndex .featureIndex {
 	color: white;
 }
 
@@ -206,12 +351,6 @@
 	display: inline;
 }
 
-.jsFeatures .featurePhoto {
-	left: 0;
-	top: 0;
-	opacity: 1;
-	position: absolute;
-}
 .hiddenFeature .featurePhoto { top: -1px; height: 1px; overflow: hidden; z-index: 0; }
 
 .featuresTransitionNext .feature,
@@ -253,6 +392,13 @@
 	z-index: 0;
 }
 
+.featureTransitionIn .featureContent {
+	transition: opacity 0s;
+	opacity: 0;
+}
+
+@keyframes fadeFeatureContent { 0% { opacity: 0; } 100% { opacity: 1; } }
+
 .featureAutoIn  .featurePhoto, .featureCycleIn .featurePhoto { left: 100%; }
 .featureAutoOut .featurePhoto { left: -90%; }
 .featureCycleOut .featurePhoto { left: -100%; }
@@ -266,7 +412,7 @@
 	   -moz-transform: rotateY(-90deg) translateZ(-400px);
 	    -ms-transform: rotateY(-90deg) translateZ(-400px);
 	     -o-transform: scale(0.2, 0.5) skewY(15deg) translate(133%,0);
-	        transform: rotateY(-90deg) translateZ(-400px);
+	        transform: rotateY(-90deg) translateZ(-300px);
 }
 .featureNextOut .featurePhoto,
 .featureBackIn .featurePhoto {
