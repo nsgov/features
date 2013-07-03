@@ -1,4 +1,3 @@
-
 var FeatureEditor = {
 	tags: {},
 	deAccentMap: {},
@@ -29,10 +28,10 @@ var FeatureEditor = {
 		return String(text).replace(/[\u0080-\u00FF]/g, FeatureEditor.deAccentChar);
 	},
 	makeIDfromTitle: function(title) {
-		var words = FeatureEditor.deAccent(title).split(/\W/),
-			newID = [FeatureEditor.YYYY_MM_DD], regex = /^\w+$/,
-			maxlen = FeatureEditor.tags.featureID.maxLength || 128;
-			longtitle = title.length > (maxlen - 11);
+		var words = FeatureEditor.deAccent(title).split(/\W/);
+		var newID = [FeatureEditor.YYYY_MM_DD], regex = /^\w+$/;
+		var maxlen = FeatureEditor.tags.featureID.maxLength || 128;
+		var longtitle = title.length > (maxlen - 11);
 		for (var i=0; i<words.length; i++)
 			if (regex.test(words[i]))
 				if (!longtitle || words[i].charAt(0).match(/[A-Z]/))	// only use title-case words if title is long
@@ -42,12 +41,12 @@ var FeatureEditor = {
 		return newID.join('-').substring(0,maxlen);
 	},
 	updateID: function() {
-		var id = FeatureEditor.tags.featureID.value,
-		    photolink = FeatureEditor.tags.photolink,
-		    contentlink = FeatureEditor.tags.contentlink,
-		    lineuplink = FeatureEditor.tags.lineuplink,
-			photofilename = id + '.jpg',
-			xmlfilename = id + '.xml';
+		var id = FeatureEditor.tags.featureID.value;
+		var photolink = FeatureEditor.tags.photolink;
+		var contentlink = FeatureEditor.tags.contentlink;
+		var lineuplink = FeatureEditor.tags.lineuplink;
+		var photofilename = id + '.jpg';
+		var xmlfilename = id + '.xml';
 		FeatureEditor.tags.photofilename.innerHTML = photofilename;
 		FeatureEditor.tags.downloadBtn.value = 'Download ' + xmlfilename;
 		photolink.innerHTML = photolink.href = '../photos/' + photofilename;
